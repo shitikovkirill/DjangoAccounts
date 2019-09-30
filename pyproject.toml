@@ -1,0 +1,12 @@
+[tool.poetry]
+name = "apdigital"
+version = "0.1.0"
+description = ""
+authors = ["Shitikov Kirill <sh.kiruh@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "3.7.4"
+django = "^2.2"
+
+[tool.poetry.dev-dependencies]
+pytest = "^3.5"
