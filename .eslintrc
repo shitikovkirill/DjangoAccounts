@@ -5,5 +5,11 @@
     "max-len": [1, 120, 2, {ignoreComments: true}],
     "prop-types": 0 //[2]
   },
-  "extends": ["airbnb-base"]
+  "extends": ["airbnb-base"],
+  "env": {
+    "es6": true
+  },
+  "globals": {
+    "document": "writable"
+  }
 }

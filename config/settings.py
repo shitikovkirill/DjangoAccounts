@@ -39,8 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'webpack_loader',
+    'rest_framework',
 
     'apps.frontend',
+    'apps.user.accounts',
 ]
 
 MIDDLEWARE = [
@@ -124,9 +126,19 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "var", "static")
 
+AUTH_USER_MODEL = "accounts.User"
+
 WEBPACK_LOADER = {
     'DEFAULT': {
         'BUNDLE_DIR_NAME': 'frontend/',
         'STATS_FILE': os.path.join(BASE_DIR, 'var/webpack-stats.json'),
     }
+}
+
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"],
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.BasicAuthentication",
+    ),
 }

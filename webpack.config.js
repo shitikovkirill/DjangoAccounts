@@ -12,7 +12,6 @@ module.exports = {
         path: path.resolve('./apps/frontend/static/frontend'),
         filename: "[name]-[hash].js",
     },
-    watch: true,
 
     plugins: [
         new BundleTracker({filename: './var/webpack-stats.json'}),
