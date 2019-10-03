@@ -1,7 +1,7 @@
 /*eslint react/prefer-stateless-function: 0 */
 /*eslint react/prop-types: 0 */
 import React, { Component } from 'react';
-import { Jumbotron } from 'reactstrap';
+import { Jumbotron, Spinner } from 'reactstrap';
 import './scss/index.scss';
 
 import { connect } from 'react-redux';
@@ -27,7 +27,11 @@ class App extends Component {
         <Jumbotron>
           <AccountForm pending={pending.adding} addAccount={addAccount} />
         </Jumbotron>
-        {pending.list ? "loading..." : (
+        {pending.list ? (
+          <div className="d-flex justify-content-center">
+            <Spinner type="grow" color="primary" />
+          </div>
+        ) : (
           <AccountList
             accounts={accounts}
             deleteAccount={deleteAccount}

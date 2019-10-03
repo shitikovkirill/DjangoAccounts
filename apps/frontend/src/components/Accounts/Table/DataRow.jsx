@@ -1,9 +1,5 @@
 import React, { PureComponent } from "react";
 import PropTypes from 'prop-types';
-import {
-  Card, CardImg, CardText, CardBody,
-  CardTitle, CardSubtitle, Button
-} from 'reactstrap';
 
 export default class DataRow extends PureComponent {
   static propTypes = {
@@ -25,7 +21,7 @@ export default class DataRow extends PureComponent {
       <td key="row-3">{item.name}</td>,
       <td key="row-4">{item.surname}</td>,
       <td key="row-5">
-        {item.avatar ? <Card><CardImg top width="100%" src={item.avatar} alt="Avatar" /></Card> : null}
+        {item.avatar ? <img src={item.avatar} alt="Avatar" className="rounded" width="100" /> : null}
       </td>,
       <td key="row-6">{item.date_joined}</td>
     ]
