@@ -3,7 +3,7 @@
 ## Run
 For running demo version needed execute:
 ```
-docker-compose -f docker-compose.yaml -f docker-compose.prod.yaml up
+docker-compose -f docker-compose.yaml -f docker-compose.prod.yaml up --build
 ```
 See: localhost:8000
 For develop you need run:
