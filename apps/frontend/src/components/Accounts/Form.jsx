@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Button, Form, Spinner } from 'reactstrap';
 import LIVR from 'livr';
 import Input from '../Elements/Input';
+import FileInput from '../Elements/FileInput';
 
 LIVR.Validator.defaultAutoTrim(true);
 
@@ -11,7 +12,7 @@ const initState = {
   password: '',
   name: '',
   surname: '',
-  avatar: '',
+  avatar: null,
 };
 
 export default class AccountForm extends Component {
@@ -75,7 +76,6 @@ export default class AccountForm extends Component {
     if (Object.keys(errors).length) {
       this.setState(prevState => (
         {
-          ...prevState,
           errors: errors
         }));
     } else {
@@ -83,7 +83,6 @@ export default class AccountForm extends Component {
       addAccount(account);
       this.setState(prevState => (
         {
-          ...prevState,
           account: { ...initState }
         }));
     }
@@ -106,8 +105,23 @@ export default class AccountForm extends Component {
     })
   };
 
+  avatarHandler = (event) => {
+    const file = event.target.files[0];
+    console.log(file);
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        account: {
+          ...prevState.account,
+          avatar: file,
+        }
+      };
+    });
+
+  };
+
   render() {
-    const { account: { email, password, name, surname, avatar }, errors } = this.state;
+    const { account: { email, password, name, surname }, errors } = this.state;
     const { pending } = this.props;
     return (
       <Form onSubmit={this.handleSubmit}>
@@ -145,11 +159,9 @@ export default class AccountForm extends Component {
           label="Surname"
           error={errors.surname}
         />
-        <Input
+        <FileInput
           name="avatar"
-          type="file"
-          value={avatar}
-          onChange={this.onChange}
+          onChange={this.avatarHandler}
           handleBlur={this.handleBlur}
           label="Avatar"
           text="Select your avatar"
@@ -163,7 +175,7 @@ export default class AccountForm extends Component {
           disabled={pending}
           onClick={this.handleSubmit}
         >
-          {pending? <Spinner type="grow" color="primary" />: null}
+          {pending ? <Spinner type="grow" color="primary" /> : null}
           Save
         </Button>
       </Form>

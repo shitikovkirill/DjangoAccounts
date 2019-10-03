@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
 import { Button, Spinner } from 'reactstrap';
+import DataRow from './Table/DataRow';
 
 export default class Item extends Component {
   static propTypes = {
@@ -35,12 +36,7 @@ export default class Item extends Component {
     const { deleting } = this.state;
     return (
       <tr>
-        <th scope="row">{item.id}</th>
-        <td>{item.email}</td>
-        <td>{item.name}</td>
-        <td>{item.surname}</td>
-        <td>{item.avatar}</td>
-        <td>{item.date_joined}</td>
+        <DataRow item={item} />
         <td>
           <Button onClick={this.deleteAction} disabled={pendingDeleting && deleting}>
             {deleting ? <Spinner type="grow" color="primary" /> : null}

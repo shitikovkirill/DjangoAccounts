@@ -15,7 +15,7 @@ import Error from './components/Error';
 
 
 class App extends Component {
-  componentWillMount() {
+  componentDidMount() {
     const { getAccounts } = this.props;
     getAccounts();
   }
@@ -24,6 +24,9 @@ class App extends Component {
     let { pending, accounts, error, addAccount, clearError, deleteAccount } = this.props;
     return (
       <main role="main" className="container">
+        <Jumbotron>
+          <AccountForm pending={pending.adding} addAccount={addAccount} />
+        </Jumbotron>
         {pending.list ? "loading..." : (
           <AccountList
             accounts={accounts}
@@ -31,9 +34,6 @@ class App extends Component {
             pendingDeleting={pending.deleting}
           />
         )}
-        <Jumbotron>
-          <AccountForm pending={pending.adding} addAccount={addAccount} />
-        </Jumbotron>
         {error ? <Error error={error} clearError={clearError} /> : null}
       </main>
     );

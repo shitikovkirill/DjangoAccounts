@@ -6,10 +6,10 @@ export const DELETE_ACCOUNT         = 'DELETE_ACCOUNT';
 export const UPDATE_ACCOUNT         = 'UPDATE_ACCOUNT';
 export const CLEAR_ERROR            = 'CLEAR_ERROR';
 
-export function pendingAccounts(action) {
+export function pendingAccounts(pendingType) {
   return {
     type: PENDING_ACCOUNTS,
-    action,
+    pendingType,
   }
 }
 

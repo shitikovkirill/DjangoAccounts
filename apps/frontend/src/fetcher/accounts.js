@@ -2,91 +2,72 @@ import {
   pendingAccounts,
   getAccounts,
   errorAccounts,
-  addAccount, deleteAccount
+  addAccount,
+  updateAccount,
+  deleteAccount,
 } from '../actions/accounts';
+import sendFetch from './helper'
 
 const getAccountsApi = () => {
   return dispatch => {
-    let status = null;
-    dispatch(pendingAccounts('list'));
-    fetch('/api/users/')
-    .then(result => {
-      status = result.ok;
-      return result
-    })
-    .then(result => result.json())
-    .then(result => {
-      if (status) {
-        dispatch(getAccounts(result));
-      } else {
-        dispatch(errorAccounts(result));
-      }
-      return result;
-    })
-    .catch(error => {
-      dispatch(errorAccounts(error));
-    })
+    sendFetch(
+      new Request('/api/users/'),
+      () => dispatch(pendingAccounts('list')),
+      (result) => dispatch(getAccounts(result)),
+      (result) => dispatch(errorAccounts(result)),
+    );
   }
 };
 
 const addAccountApi = (data) => {
-  data = {...data};
+  data = { ...data };
   let avatar = data.avatar;
   delete data.avatar;
   return dispatch => {
-    let status = null;
-    dispatch(pendingAccounts('adding'));
-    fetch('/api/users/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8'
-      },
-      body: JSON.stringify(data)
-    })
-    .then(result => {
-      status = result.ok;
-      return result
-    })
-    .then(result => result.json())
-    .then(result => {
-      if (status) {
-        dispatch(addAccount(result));
-      } else {
-        dispatch(errorAccounts(result));
-      }
-      return result;
-    })
-    .catch(error => {
-      dispatch(errorAccounts(error));
-    })
+    let propsRes = sendFetch(
+      new Request('/api/users/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(data)
+      }),
+      () => dispatch(pendingAccounts('adding')),
+      (result) => dispatch(addAccount(result)),
+      (result) => dispatch(errorAccounts(result)),
+    );
+    if (avatar) {
+      propsRes.then((result) => {
+        let fd = new FormData();
+        fd.append('avatar', avatar, avatar.name);
+        let request = new Request(`/api/users/${result.id}/`, {
+          method: 'PATCH',
+          body: fd
+        });
+        sendFetch(
+          request,
+          () => dispatch(pendingAccounts('editing')),
+          (result) => dispatch(updateAccount(result)),
+          (result) => dispatch(errorAccounts(result)),
+        )
+      })
+    }
   };
 };
 
 const deleteAccountApi = (id) => {
   return dispatch => {
-    let status = null;
-    dispatch(pendingAccounts('deleting'));
-    fetch(`/api/users/${id}/`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8'
-      },
-    })
-    .then(result => {
-      status = result.ok;
-      return result
-    })
-    .then(result => {
-      if (status) {
-        dispatch(deleteAccount(id));
-      } else {
-        dispatch(errorAccounts(result));
-      }
-      return result;
-    })
-    .catch(error => {
-      dispatch(errorAccounts(error));
-    })
+    sendFetch(
+      new Request(`/api/users/${id}/`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        },
+      }),
+      () => dispatch(pendingAccounts('deleting')),
+      (result) => dispatch(deleteAccount(id)),
+      (result) => dispatch(errorAccounts(result)),
+    );
   }
 };
 

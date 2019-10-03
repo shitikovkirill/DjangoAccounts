@@ -2,6 +2,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from .validators import UpdateIsDisallow
+from rest_framework.validators import UniqueValidator
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -13,7 +14,7 @@ class UserSerializer(serializers.ModelSerializer):
         ]
     )
     email = serializers.EmailField(
-        validators=[UpdateIsDisallow('Changing this field is prohibited.')]
+        validators=[UpdateIsDisallow('Changing this field is prohibited.'), UniqueValidator(queryset=get_user_model().objects.all())]
     )
 
     def create(self, validated_data):

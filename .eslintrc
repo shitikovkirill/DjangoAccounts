@@ -10,10 +10,12 @@
     "es6": true
   },
   "globals": {
-    "document": "writable",
-    "localStorage": "writable",
-    "console": "writable",
-    "fetch": "writable"
+    "document": "readonly",
+    "localStorage": "readonly",
+    "console": "readonly",
+    "fetch": "readonly",
+    "FormData": "readonly",
+    "Request": "readonly"
   },
   "rules": {
     "no-unused-vars": 0,

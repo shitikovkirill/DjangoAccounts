@@ -126,6 +126,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "var", "static")
 
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "var", "media")
+
 AUTH_USER_MODEL = "accounts.User"
 
 WEBPACK_LOADER = {

@@ -11,6 +11,7 @@ const initialState = {
   pending: {
     list: false,
     adding: false,
+    editing: false,
     deleting: false,
   },
   accounts: [],
@@ -20,21 +21,15 @@ const initialState = {
 const accountReducer = (state = initialState, action) => {
 
   switch (action.type) {
-    case PENDING_ACCOUNTS: {
-      let data = {
-        ...state,
-      };
-      data['pending'][action.action] = true;
-      return data;
-    }
 
-    case GET_ACCOUNTS: {
-      let data = {
+    case PENDING_ACCOUNTS: {
+      return {
         ...state,
-        accounts: action.payload
+        pending: {
+          ...state.pending,
+          [action.pendingType]: true
+        }
       };
-      data['pending']['list'] = false;
-      return data;
     }
 
     case ERROR_ACCOUNTS: {
@@ -43,39 +38,71 @@ const accountReducer = (state = initialState, action) => {
         pending: {
           list: false,
           adding: false,
+          editing: false,
           deleting: false,
         },
         error: action.error
       };
     }
 
-    case ADD_ACCOUNT: {
-      let data = {
+    case GET_ACCOUNTS: {
+      return  {
         ...state,
+        accounts: action.payload,
+        pending: {
+          ...state.pending,
+          list: false
+        }
       };
-      data['pending']['adding'] = false;
-      data['accounts'].push(action.payload);
-      return data;
     }
+
+    case ADD_ACCOUNT: {
+      return  {
+        ...state,
+        accounts: [...state.accounts, action.payload],
+        pending: {
+          ...state.pending,
+          adding: false
+        }
+      };
+    }
+
     case DELETE_ACCOUNT: {
-      let data = {
+      return  {
         ...state,
         accounts: state.accounts.filter((item)=>{
           return item.id !== action.payload
-        })
+        }),
+        pending: {
+          ...state.pending,
+          deleting: false
+        }
       };
-      data['pending']['deleting'] = false;
-      return data;
     }
+
     case UPDATE_ACCOUNT: {
-      return null
+      return  {
+        ...state,
+        accounts: state.accounts.map(function (item) {
+          if (item.id === this.id) {
+            return this;
+          }
+          return item
+        }, action.payload),
+        pending: {
+          ...state.pending,
+          editing: false
+        }
+      };
     }
+
     case CLEAR_ERROR: {
       return {
         ...state,
         error: null
       };
     }
+
     default: {
       return state;
     }

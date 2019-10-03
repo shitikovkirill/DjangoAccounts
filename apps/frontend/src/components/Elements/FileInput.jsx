@@ -2,16 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormFeedback, FormGroup, FormText, Label, Input as BInput } from 'reactstrap';
 
-const Input = ({ label, text, error, type, name, value, onChange, handleBlur}) => {
+const FileInput = ({ label, text, error, name, onChange, handleBlur}) => {
   const hasError = Boolean(error);
   return (
     <FormGroup>
       {label ? (<Label for={name}>{label}</Label>) : null}
       <BInput
-        type={type}
+        type="file"
         name={name}
         id={name}
-        value={value}
         onChange={onChange}
         onBlur={handleBlur}
         invalid={hasError}
@@ -22,18 +21,15 @@ const Input = ({ label, text, error, type, name, value, onChange, handleBlur}) =
   )
 };
 
-Input.defaultProps = {
-  type: "text",
+FileInput.defaultProps = {
   label: null,
   text: null,
   error: null,
   handleBlur: () => {},
 };
 
-Input.propTypes = {
+FileInput.propTypes = {
   name: PropTypes.string.isRequired,
-  type: PropTypes.string,
-  value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   handleBlur: PropTypes.func,
   label: PropTypes.string,
@@ -41,4 +37,4 @@ Input.propTypes = {
   error: PropTypes.string,
 };
 
-export default Input
+export default FileInput
