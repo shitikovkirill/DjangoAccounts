@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { Button, Form, Spinner } from 'reactstrap';
 import LIVR from 'livr';
 import Input from '../Elements/Input';
-import FileInput from '../Elements/FileInput';
 
 LIVR.Validator.defaultAutoTrim(true);
 
@@ -159,8 +158,9 @@ export default class AccountForm extends Component {
           label="Surname"
           error={errors.surname}
         />
-        <FileInput
+        <Input
           name="avatar"
+          type="file"
           onChange={this.avatarHandler}
           handleBlur={this.handleBlur}
           label="Avatar"

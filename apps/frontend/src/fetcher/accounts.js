@@ -55,6 +55,42 @@ const addAccountApi = (data) => {
   };
 };
 
+const updateAccountApi = (id, data) => {
+  return dispatch => {
+    data = { ...data };
+    let avatar = data.avatar;
+    delete data.avatar;
+    return dispatch => {
+      sendFetch(
+        new Request(`/api/users/${id}/`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+          },
+          body: JSON.stringify(data)
+        }),
+        () => dispatch(pendingAccounts('adding')),
+        (result) => dispatch(addAccount(result)),
+        (result) => dispatch(errorAccounts(result)),
+      );
+      if (avatar) {
+        let fd = new FormData();
+        fd.append('avatar', avatar, avatar.name);
+        let request = new Request(`/api/users/${id}/`, {
+          method: 'PATCH',
+          body: fd
+        });
+        sendFetch(
+          request,
+          () => dispatch(pendingAccounts('editing')),
+          (result) => dispatch(updateAccount(result)),
+          (result) => dispatch(errorAccounts(result)),
+        )
+      }
+    };
+  }
+};
+
 const deleteAccountApi = (id) => {
   return dispatch => {
     sendFetch(
@@ -72,4 +108,4 @@ const deleteAccountApi = (id) => {
 };
 
 
-export { getAccountsApi, addAccountApi, deleteAccountApi };
+export { getAccountsApi, addAccountApi, deleteAccountApi, updateAccountApi };
