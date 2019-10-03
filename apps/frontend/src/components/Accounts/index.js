@@ -1,4 +1,5 @@
 import AccountList from './List';
-import AccountForm from './AddForm';
+import AccountForm from './Form/Add';
+import AccountEditForm from './Form/Edit';
 
-export { AccountList, AccountForm }
+export { AccountList, AccountForm, AccountEditForm }

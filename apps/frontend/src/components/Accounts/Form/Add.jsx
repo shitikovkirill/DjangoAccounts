@@ -1,10 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Button, Form, Spinner } from 'reactstrap';
-import LIVR from 'livr';
-import Input from '../Elements/Input';
-
-LIVR.Validator.defaultAutoTrim(true);
+import Input from '../../Elements/Input';
+import { validateFields, validateField } from './Helpers'
 
 const initState = {
   email: '',
@@ -37,28 +35,10 @@ export default class AccountForm extends Component {
     };
   }
 
-  validateFields = () => {
-    const { account } = this.state;
-    const validator = new LIVR.Validator(this.fieldValidation);
-    validator.validate(account);
-    return validator.getErrors() || {};
-  };
-
-  validateField = (field) => {
-    const { account } = this.state;
-    if (this.fieldValidation[field]) {
-      const validator = new LIVR.Validator({
-        [field]: this.fieldValidation[field]
-      });
-      validator.validate({ [field]: account[field] });
-      return validator.getErrors() || {};
-    }
-    return {}
-  };
-
   handleBlur = (event) => {
-    let name = event.target.name;
-    let errors = this.validateField(name);
+    const { account } = this.state;
+    let field = event.target.name;
+    let errors = validateField(field, account[field], this.fieldValidation[field]);
     if (Object.keys(errors).length) {
       this.setState(prevState => ({
         errors: {
@@ -70,8 +50,9 @@ export default class AccountForm extends Component {
   };
 
   handleSubmit = event => {
+    const { account } = this.state;
     const { addAccount } = this.props;
-    const errors = this.validateFields();
+    const errors = validateFields(account, this.fieldValidation);
     if (Object.keys(errors).length) {
       this.setState(prevState => (
         {
