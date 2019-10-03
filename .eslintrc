@@ -1,15 +1,25 @@
 {
   parser: "babel-eslint",
-  "rules": {
-    "no-unused-vars": 0,
-    "max-len": [1, 120, 2, {ignoreComments: true}],
-    "prop-types": 0 //[2]
-  },
-  "extends": ["airbnb-base"],
+  "extends": [
+    "airbnb",
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
+  plugins: ["react", "jsx-a11y", "import", "react-hooks"],
   "env": {
     "es6": true
   },
   "globals": {
-    "document": "writable"
+    "document": "writable",
+    "localStorage": "writable",
+    "console": "writable",
+    "fetch": "writable"
+  },
+  "rules": {
+    "no-unused-vars": 0,
+    "max-len": [1, 120, 2, {ignoreComments: true}],
+    "prop-types": 0, //[2]
+    "no-console": 0,
+    "no-debugger": 0
   }
 }

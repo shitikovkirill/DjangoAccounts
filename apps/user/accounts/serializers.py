@@ -6,8 +6,15 @@ from .validators import UpdateIsDisallow
 
 class UserSerializer(serializers.ModelSerializer):
     groups = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-    password = serializers.CharField(write_only=True, validators=[UpdateIsDisallow('Changing this field is prohibited. Use password recovery functionality.')])
-    email = serializers.CharField(validators=[UpdateIsDisallow('Changing this field is prohibited.')])
+    password = serializers.SlugField(
+        write_only=True,
+        validators=[
+            UpdateIsDisallow('Changing this field is prohibited. Use password recovery functionality.')
+        ]
+    )
+    email = serializers.EmailField(
+        validators=[UpdateIsDisallow('Changing this field is prohibited.')]
+    )
 
     def create(self, validated_data):
         password = validated_data.pop("password", None)
