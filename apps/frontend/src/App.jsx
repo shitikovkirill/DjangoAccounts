@@ -6,7 +6,7 @@ import './scss/index.scss';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getAccountsApi, addAccountApi, deleteAccountApi } from './fetcher/accounts';
+import { getAccountsApi, addAccountApi, updateAccountApi, deleteAccountApi } from './fetcher/accounts';
 import { clearError } from './actions/accounts';
 
 
@@ -21,7 +21,7 @@ class App extends Component {
   }
 
   render() {
-    let { pending, accounts, error, addAccount, clearError, deleteAccount } = this.props;
+    let { pending, accounts, error, addAccount, updateAccount, deleteAccount, clearError } = this.props;
     return (
       <main role="main" className="container">
         <Jumbotron>
@@ -34,6 +34,7 @@ class App extends Component {
         ) : (
           <AccountList
             accounts={accounts}
+            updateAccount={updateAccount}
             deleteAccount={deleteAccount}
             pendingDeleting={pending.deleting}
           />
@@ -49,6 +50,7 @@ const mapDispatchToProps = (dispatch) => {
     getAccounts: getAccountsApi,
     addAccount: addAccountApi,
     deleteAccount: deleteAccountApi,
+    updateAccount: updateAccountApi,
     clearError,
   }, dispatch);
 };

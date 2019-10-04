@@ -12,7 +12,7 @@ const initState = {
   avatar: null,
 };
 
-export default class AccountForm extends Component {
+export default class AddForm extends Component {
   static propTypes = {
     addAccount: PropTypes.func.isRequired,
     pending: PropTypes.bool.isRequired,

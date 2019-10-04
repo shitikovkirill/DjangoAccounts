@@ -4,7 +4,7 @@ import { Table } from 'reactstrap';
 import AccountItem from './Item'
 
 const List = (props) => {
-  const { accounts, deleteAccount, pendingDeleting } = props;
+  const { accounts, deleteAccount, updateAccount, pendingDeleting } = props;
   return (
     <Table>
       <thead>
@@ -15,12 +15,18 @@ const List = (props) => {
           <th>Last Name</th>
           <th>Avatar</th>
           <th>Date Joined</th>
-          <th>Actions</th>
+          <th colSpan="2">Actions</th>
         </tr>
       </thead>
       <tbody>
         {accounts.map((item) => (
-          <AccountItem key={item.id} item={item} deleteAccount={deleteAccount} pendingDeleting={pendingDeleting} />
+          <AccountItem
+            key={item.id}
+            item={item}
+            deleteAccount={deleteAccount}
+            updateAccount={updateAccount}
+            pendingDeleting={pendingDeleting}
+          />
       ))}
       </tbody>
     </Table>
@@ -30,6 +36,7 @@ const List = (props) => {
 List.propTypes = {
   accounts: PropTypes.arrayOf(PropTypes.object).isRequired,
   deleteAccount: PropTypes.func.isRequired,
+  updateAccount: PropTypes.func.isRequired,
   pendingDeleting: PropTypes.bool.isRequired,
 };
 

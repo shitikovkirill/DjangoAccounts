@@ -4,7 +4,8 @@ import {
   GET_ACCOUNTS,
   ADD_ACCOUNT,
   DELETE_ACCOUNT,
-  UPDATE_ACCOUNT, CLEAR_ERROR
+  UPDATE_ACCOUNT,
+  CLEAR_ERROR
 } from '../actions/accounts';
 
 const initialState = {
@@ -84,7 +85,7 @@ const accountReducer = (state = initialState, action) => {
       return  {
         ...state,
         accounts: state.accounts.map(function (item) {
-          if (item.id === this.id) {
+          if (item.id == this.id) {
             return this;
           }
           return item

@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react";
 import PropTypes from 'prop-types';
+import { Button } from 'reactstrap';
 
 export default class DataRow extends PureComponent {
   static propTypes = {
@@ -11,10 +12,11 @@ export default class DataRow extends PureComponent {
       avatar: PropTypes.string,
       date_joined: PropTypes.string,
     }).isRequired,
+    toggleEditing: PropTypes.func.isRequired,
   };
 
   render() {
-    const { item } = this.props;
+    const { item, toggleEditing } = this.props;
     return [
       <th scope="row" key="row-1">{item.id}</th>,
       <td key="row-2">{item.email}</td>,
@@ -23,7 +25,8 @@ export default class DataRow extends PureComponent {
       <td key="row-5">
         {item.avatar ? <img src={item.avatar} alt="Avatar" className="rounded" width="100" /> : null}
       </td>,
-      <td key="row-6">{item.date_joined}</td>
+      <td key="row-6">{item.date_joined}</td>,
+      <td key="row-7"><Button onClick={toggleEditing}>Edit</Button></td>,
     ]
   }
 }

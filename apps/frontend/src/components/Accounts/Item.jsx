@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from 'prop-types';
 import { Button, Spinner } from 'reactstrap';
 import DataRow from './Table/DataRow';
+import AccountEditForm from './Form/Edit';
 
 export default class Item extends Component {
   static propTypes = {
@@ -14,6 +15,7 @@ export default class Item extends Component {
       date_joined: PropTypes.string,
     }).isRequired,
     deleteAccount: PropTypes.func.isRequired,
+    updateAccount: PropTypes.func.isRequired,
     pendingDeleting: PropTypes.bool.isRequired,
   };
 
@@ -21,9 +23,16 @@ export default class Item extends Component {
     super(props);
 
     this.state = {
-      deleting: false
+      deleting: false,
+      editing: false,
     };
   }
+
+  toggleEditing = () => {
+    this.setState((prevState)=>({
+      editing: !prevState.editing
+    }))
+  };
 
   deleteAction = () => {
     const {item: { id }, deleteAccount } = this.props;
@@ -32,11 +41,22 @@ export default class Item extends Component {
   };
 
   render() {
-    const { item, pendingDeleting } = this.props;
-    const { deleting } = this.state;
+    const { item, pendingDeleting, updateAccount } = this.props;
+    const { deleting, editing } = this.state;
     return (
       <tr>
-        <DataRow item={item} />
+        { editing ? (
+          <AccountEditForm
+            item={item}
+            updateAccount={updateAccount}
+            toggleEditing={this.toggleEditing}
+          />
+        ): (
+          <DataRow
+            item={item}
+            toggleEditing={this.toggleEditing}
+          />
+        )}
         <td>
           <Button onClick={this.deleteAction} disabled={pendingDeleting && deleting}>
             {deleting ? <Spinner type="grow" color="primary" /> : null}
