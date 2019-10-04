@@ -147,6 +147,7 @@ export default class AddForm extends Component {
           label="Avatar"
           text="Select your avatar"
           error={errors.avatar}
+          accept="image/*"
         />
         <hr />
         <Button

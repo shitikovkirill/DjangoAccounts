@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormFeedback, FormGroup, FormText, Label, Input as BInput } from 'reactstrap';
 
-const Input = ({ label, text, error, type, name, value, onChange, handleBlur}) => {
+const Input = ({ label, text, error, type, name, value, onChange, handleBlur, ...addition}) => {
   const hasError = Boolean(error);
   return (
     <FormGroup>
@@ -15,6 +15,7 @@ const Input = ({ label, text, error, type, name, value, onChange, handleBlur}) =
         onChange={onChange}
         onBlur={handleBlur}
         invalid={hasError}
+        {...addition}
       />
       {error ? (<FormFeedback>{error}</FormFeedback>) : null}
       {text ? (<FormText color="muted">{text}</FormText>) : null}
