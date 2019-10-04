@@ -112,7 +112,7 @@ export default class AddForm extends Component {
           error={errors.email}
           onChange={this.onChange}
           handleBlur={this.handleBlur}
-          label="Email"
+          placeholder="Email"
         />
         <Input
           name="password"
@@ -120,7 +120,7 @@ export default class AddForm extends Component {
           value={password}
           onChange={this.onChange}
           handleBlur={this.handleBlur}
-          label="Password"
+          placeholder="Password"
           error={errors.password}
         />
         <Input
@@ -128,7 +128,7 @@ export default class AddForm extends Component {
           value={name}
           onChange={this.onChange}
           handleBlur={this.handleBlur}
-          label="Name"
+          placeholder="Name"
           error={errors.name}
         />
         <Input
@@ -136,7 +136,7 @@ export default class AddForm extends Component {
           value={surname}
           onChange={this.onChange}
           handleBlur={this.handleBlur}
-          label="Surname"
+          placeholder="Surname"
           error={errors.surname}
         />
         <Input
