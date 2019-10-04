@@ -10,7 +10,7 @@ COPY .babelrc .
 COPY .eslintrc .
 
 RUN set -ex \
-    && yarn install \
+    && yarn install --non-interactive \
     && yarn build
 
 FROM python:3.7
