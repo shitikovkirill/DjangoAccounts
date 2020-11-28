@@ -1,4 +1,4 @@
-# APdigital
+# DjangoAccounts
 
 ## Run
 For running demo version needed execute:
